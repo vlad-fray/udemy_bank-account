@@ -5,8 +5,7 @@ const account1 = {
 	owner: 'Jonas Schmedtmann',
 	username: 'js',
 	movements: [
-		200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97,
-		1300,
+		200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300,
 	],
 	interestRate: 1.2, // %
 	pin: 1111,
@@ -28,9 +27,7 @@ const account1 = {
 const account2 = {
 	owner: 'Jessica Davis',
 	username: 'jd',
-	movements: [
-		5000, 3400, -150, -790, -3210, -1000, 8500, -30,
-	],
+	movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
 	interestRate: 1.5,
 	pin: 2222,
 
@@ -52,43 +49,34 @@ const accounts = [account1, account2];
 // Elements
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
-const labelBalance = document.querySelector(
-	'.balance__value'
-);
-const labelSumIn = document.querySelector(
-	'.summary__value--in'
-);
-const labelSumOut = document.querySelector(
-	'.summary__value--out'
-);
+const labelBalance = document.querySelector('.balance__value');
+const labelSumIn = document.querySelector('.summary__value--in');
+const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInterest = document.querySelector(
 	'.summary__value--interest'
 );
 const labelTimer = document.querySelector('.timer');
 
 const containerApp = document.querySelector('.app');
-const containerMovements =
-	document.querySelector('.movements');
+const containerMovements = document.querySelector('.movements');
+const containerAccList = document.querySelector(
+	'.accounts-modal__container'
+);
 
 const btnLogin = document.querySelector('.login__btn');
-const btnTransfer = document.querySelector(
-	'.form__btn--transfer'
-);
+const btnTransfer = document.querySelector('.form__btn--transfer');
 const btnLoan = document.querySelector('.form__btn--loan');
-const btnClose = document.querySelector(
-	'.form__btn--close'
-);
+const btnClose = document.querySelector('.form__btn--close');
 const btnSort = document.querySelector('.btn--sort');
+const btnCloseAccList = document.getElementById(
+	'close-accounts-modal'
+);
 
 const inputLoginUsername = document.querySelector(
 	'.login__input--user'
 );
-const inputLoginPin = document.querySelector(
-	'.login__input--pin'
-);
-const inputTransferTo = document.querySelector(
-	'.form__input--to'
-);
+const inputLoginPin = document.querySelector('.login__input--pin');
+const inputTransferTo = document.querySelector('.form__input--to');
 const inputTransferAmount = document.querySelector(
 	'.form__input--amount'
 );
@@ -98,9 +86,7 @@ const inputLoanAmount = document.querySelector(
 const inputCloseUsername = document.querySelector(
 	'.form__input--user'
 );
-const inputClosePin = document.querySelector(
-	'.form__input--pin'
-);
+const inputClosePin = document.querySelector('.form__input--pin');
 
 //Global variables
 let currentAccount = null;
@@ -142,10 +128,7 @@ const displayMovements = function (acc, sort = false) {
 };
 
 const calcPrintBalance = (acc) => {
-	acc.balance = acc.movements.reduce(
-		(acc, mov) => acc + mov,
-		0
-	);
+	acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
 	labelBalance.textContent = changeFormatNumber(
 		acc.balance,
 		acc.locale,
@@ -158,17 +141,13 @@ const calcDisplaySummary = (acc) => {
 	const interestRate = acc.interestRate;
 
 	const incomes = changeFormatNumber(
-		movs
-			.filter((mov) => mov > 0)
-			.reduce((acc, mov) => acc + mov, 0),
+		movs.filter((mov) => mov > 0).reduce((acc, mov) => acc + mov, 0),
 		acc.locale,
 		acc.currency
 	);
 	const outcomes = changeFormatNumber(
 		Math.abs(
-			movs
-				.filter((mov) => mov < 0)
-				.reduce((acc, mov) => acc + mov, 0)
+			movs.filter((mov) => mov < 0).reduce((acc, mov) => acc + mov, 0)
 		),
 		acc.locale,
 		acc.currency
@@ -202,11 +181,7 @@ const clearInpitFields = (...inputs) => {
 	});
 };
 
-const changeFormatNumber = (
-	num,
-	locale,
-	currency = 'EUR'
-) => {
+const changeFormatNumber = (num, locale, currency = 'EUR') => {
 	const options = {
 		style: 'currency',
 		currency: currency,
@@ -217,11 +192,7 @@ const changeFormatNumber = (
 	);
 };
 
-const changeFormatDate = (
-	dateStr,
-	locale,
-	isShort = false
-) => {
+const changeFormatDate = (dateStr, locale, isShort = false) => {
 	const date = new Date(dateStr);
 	if (isShort) {
 		const options = {
@@ -229,9 +200,7 @@ const changeFormatDate = (
 			month: 'long',
 			year: 'numeric',
 		};
-		return new Intl.DateTimeFormat(locale, options).format(
-			date
-		);
+		return new Intl.DateTimeFormat(locale, options).format(date);
 	} else {
 		const options = {
 			hour: 'numeric',
@@ -240,19 +209,14 @@ const changeFormatDate = (
 			month: 'long',
 			year: 'numeric',
 		};
-		return new Intl.DateTimeFormat(locale, options).format(
-			date
-		);
+		return new Intl.DateTimeFormat(locale, options).format(date);
 	}
 };
 
 const startLogoutTimer = () => {
 	let time = 600;
 	const tick = () => {
-		const min = String(Math.floor(time / 60)).padStart(
-			2,
-			0
-		);
+		const min = String(Math.floor(time / 60)).padStart(2, 0);
 		const sec = String(time % 60).padStart(2, 0);
 		labelTimer.textContent = min + ':' + sec;
 		if (time === 0) {
@@ -292,10 +256,10 @@ btnLogin.addEventListener('click', function (e) {
 
 		resetLogoutTimer();
 		updateUI();
+	} else alert('Wrong login or pincode, please, try again!');
 
-		// Clear input fields
-		clearInpitFields(inputLoginUsername, inputLoginPin);
-	} else console.log(`try again`);
+	// Clear input fields
+	clearInpitFields(inputLoginUsername, inputLoginPin);
 });
 
 btnTransfer.addEventListener('click', function (e) {
@@ -313,14 +277,10 @@ btnTransfer.addEventListener('click', function (e) {
 		currentAccount.username !== receiverAcc.username
 	) {
 		currentAccount.movements.push(-amount);
-		currentAccount.movementsDates.push(
-			new Date().toISOString()
-		);
+		currentAccount.movementsDates.push(new Date().toISOString());
 
 		receiverAcc.movements.push(amount);
-		receiverAcc.movementsDates.push(
-			new Date().toISOString()
-		);
+		receiverAcc.movementsDates.push(new Date().toISOString());
 		updateUI();
 	} else {
 		console.log(`Something went wrong. Try again`);
@@ -332,14 +292,10 @@ btnLoan.addEventListener('click', function (e) {
 	const amount = Math.floor(+inputLoanAmount.value);
 	if (
 		amount > 0 &&
-		currentAccount.movements.some(
-			(mov) => mov >= amount * 0.1
-		)
+		currentAccount.movements.some((mov) => mov >= amount * 0.1)
 	) {
 		currentAccount.movements.push(amount);
-		currentAccount.movementsDates.push(
-			new Date().toISOString()
-		);
+		currentAccount.movementsDates.push(new Date().toISOString());
 		updateUI();
 	}
 	clearInpitFields(inputLoanAmount);
@@ -373,4 +329,23 @@ btnClose.addEventListener('click', function (e) {
 		//Hide UI
 		containerApp.style.opacity = 0;
 	}
+});
+
+btnCloseAccList.addEventListener('click', function (e) {
+	e.preventDefault();
+	const modalList = e.target.closest('.accounts-modal');
+	modalList.parentNode.removeChild(modalList);
+});
+
+window.addEventListener('load', function () {
+	containerAccList.innerHTML = '';
+	let markup = '';
+	accounts.forEach((acc) => {
+		markup += `
+			<p>
+				user: ${acc.username}, PIN: ${acc.pin}
+			</p>
+		`;
+	});
+	containerAccList.insertAdjacentHTML('beforeend', markup);
 });

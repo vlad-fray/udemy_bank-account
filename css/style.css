@@ -1,9 +1,3 @@
-/*
- * Use this CSS to learn some intersting techniques,
- * in case you're wondering how I built the UI.
- * Have fun! 😁
- */
-
 * {
 	margin: 0;
 	padding: 0;
@@ -155,19 +149,11 @@ nav {
 }
 
 .movements__type--deposit {
-	background-image: linear-gradient(
-		to top left,
-		#39b385,
-		#9be15d
-	);
+	background-image: linear-gradient(to top left, #39b385, #9be15d);
 }
 
 .movements__type--withdrawal {
-	background-image: linear-gradient(
-		to top left,
-		#e52a5a,
-		#ff585f
-	);
+	background-image: linear-gradient(to top left, #e52a5a, #ff585f);
 }
 
 .movements__value {
@@ -222,27 +208,15 @@ nav {
 }
 
 .operation--transfer {
-	background-image: linear-gradient(
-		to top left,
-		#ffb003,
-		#ffcb03
-	);
+	background-image: linear-gradient(to top left, #ffb003, #ffcb03);
 }
 
 .operation--loan {
-	background-image: linear-gradient(
-		to top left,
-		#39b385,
-		#9be15d
-	);
+	background-image: linear-gradient(to top left, #39b385, #9be15d);
 }
 
 .operation--close {
-	background-image: linear-gradient(
-		to top left,
-		#e52a5a,
-		#ff585f
-	);
+	background-image: linear-gradient(to top left, #e52a5a, #ff585f);
 }
 
 h2 {
@@ -314,4 +288,28 @@ h2 {
 
 .timer {
 	font-weight: 600;
+}
+
+.accounts-modal {
+	position: sticky;
+	padding: 1rem;
+	width: 100%;
+	min-height: 10vh;
+	left: 0;
+	bottom: 0;
+
+	background-color: #fff;
+	border: 1px solid #333;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.accounts-modal__btn {
+	margin-top: 5px;
+	width: 2rem;
+	height: 2rem;
+}
+
+.accounts-modal__container {
+	font-size: 1.5rem;
 }
